@@ -1,0 +1,91 @@
+{% extends 'Admin/index.html' %}
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Staff</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .btn-submit {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-submit:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+        .btn-back {
+            margin-bottom: 10px;
+        }
+        .img-preview {
+            max-height: 150px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="/admin_manage_staff" class="btn btn-secondary btn-back">Back to Staff List</a>
+        <h2><font color="white">EDIT STAFF</font></h2>
+        <form id="form1" name="form1" method="post" action="/edit_staff_post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ staff.id }}">
+
+            <div class="form-group">
+                <label for="name"><font color="white">Name</font> </label>
+                <input type="text" id="name" name="name"class="form-control" value="{{ staff.Name }}" />
+            </div>
+
+            <div class="form-group">
+                <label for="place"><font color="white">Place</font></label>
+                <input type="text" id="place" name="place" class="form-control" value="{{ staff.Place }}" />
+            </div>
+
+            <div class="form-group">
+                <label for="phone"><font color="white">Phone</font></label>
+                <input type="text" id="phone" name="phone" class="form-control" value="{{ staff.PhoneNo }}" required pattern="[6789][0-9]{9}" />
+            </div>
+
+            <div class="form-group">
+                <label for="email"><font color="white">Email</font></label>
+                <input type="email" id="email" name="email" class="form-control" value="{{ staff.Email }}" />
+            </div>
+
+            <div class="form-group">
+                <label for="image"><font color="white">Image</font></label>
+                <input type="file" id="image" name="image" class="form-control-file" accept="image/png,image/jpeg" />
+            </div>
+
+            <div class="form-group">
+                <label for="username"><font color="white">UserName</font></label>
+                <input type="text" id="username" name="username" class="form-control" value="{{ login.Username }}" />
+            </div>
+
+            <div class="form-group">
+                <label for="password"><font color="white">Password</font></label>
+                <input type="password" id="password" name="password" class="form-control" value="{{ login.Password }}" />
+            </div>
+
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+{% endblock %}

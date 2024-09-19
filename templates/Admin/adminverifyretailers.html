@@ -1,0 +1,81 @@
+
+{% extends 'Admin/index.html' %}
+{% load static %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Staff</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .table-wrapper {
+            margin-top: 20px;
+        }
+        .table-img {
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+        }
+        .btn-edit {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-edit:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+        .btn-add {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+<form name="" action="/sretailers" method="post">
+    <label for="name-search"><font color="white">Name:</font>
+    <input type="text" id="name-search" name="textfield" placeholder="Enter name to search"/>
+        <input type="submit" name="Submit" value="Search"/>
+    </label>
+
+</form>
+    <div class="table-wrapper">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+               <tr>
+      <th>Sl.No</th>
+      <th>Name</th>
+      <th>Place</th>
+      <th>PhoneNo</th>s
+      <th>Email</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+            </thead>
+        <tbody>
+            {% for i in val %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td><img src="{{ i.Image.url }}" class="table-img" alt="{{ i.Name }}"><br/>{{ i.Name|capfirst }}</td>
+      <td>&nbsp;{{ i.Place }}</td>
+      <td>{{ i.PhoneNo }}</td>
+      <td>{{ i.Email }}</td>
+      <td>{% if i.Loginid.Type  == 'user' %} Accepted {% else %} {{ i.Loginid.id }} {% endif %}</td>
+      <td> {% if i.Loginid.Type == 'pending' %}<p><a href="/acceptretailer/{{ i.Loginid.id }}" class="btn btn-primary">Accept</a></p>
+      <p><a href="/rejectretailer/{{ i.Loginid.id }}"  class="btn btn-danger">Reject</a></p>{% endif %}</td>
+
+    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock %}

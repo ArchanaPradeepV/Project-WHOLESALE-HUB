@@ -1,0 +1,78 @@
+{% extends 'Admin/index.html' %}
+{% load static %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Staff</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .table-wrapper {
+            margin-top: 20px;
+        }
+        .table-img {
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+        }
+        .btn-edit {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-edit:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+        .btn-add {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="add_staff" class="btn btn-primary btn-add">Add New Staff</a>
+<form name="" action="popup" method="post">
+    <label for="name-search"><font color="white">Name:</font>
+    <input type="text" id="name-search" name="textfield" placeholder="Enter name to search"/>
+        <input type="submit" name="Submit" value="Search"/>
+    </label>
+
+</form>
+    <div class="table-wrapper">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Si. No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Place</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in staff %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.Name|capfirst }}</td>
+                    <td>{{ i.Place }}</td>
+                    <td>{{ i.PhoneNo }}</td>
+                    <td>{{ i.Email }}</td>
+                    <td><img src="{{ i.Image.url }}" class="table-img" alt="{{ i.Name }}"></td>
+                    <td><a href="edit_staff/{{ i.id }}" class="btn btn-warning btn-edit">EDIT</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock %}

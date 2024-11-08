@@ -1,0 +1,112 @@
+
+{% extends 'Staff/index.html' %}
+{% load static %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Staff</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .table-wrapper {
+            margin-top: 20px;
+        }
+        .table-img {
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+        }
+        .btn-edit {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-edit:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+        .btn-add {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+<form name="" action="/sretailers" method="post">
+{#    <label for="name-search"><font color="white">Name:</font>#}
+{#    <input type="text" id="name-search" name="textfield" placeholder="Enter name to search"/>#}
+{#        <input type="submit" name="Submit" value="Search"/>#}
+{#    </label>#}
+
+
+    <div class="table-wrapper">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+               <tr>
+      <th>Sl.No</th>
+      <th>User</th>
+      <th>Product</th>
+      <th>Date</th>
+      <th>price</th>s
+      <th>Quantity</th>
+      <th>Status</th>
+      <th>Reason</th>
+{#      <th></th>#}
+
+    </tr>
+            </thead>
+        <tbody>
+
+            {% for i in page_obj %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ i.Orderid.Orderid.Retailerid.Name }}</td>
+      <td><img src="{{ i.Orderid.Productid.Image.url }}" class="table-img" alt="{{ i.Orderid.Productid.Name }}"><br/>{{ i.Orderid.Productid.Name|capfirst }}</td>
+      <td>&nbsp;{{ i.Date }}</td>
+      <td>{{ i.Orderid.Price }}</td>
+      <td>{{ i.Orderid.Quantity }}</td>
+      <td>{{ i.Status }}</td>
+      <td>{{ i.Reason }}</td>
+{#      <td>{% if i.Loginid.Type  == 'user' %} Accepted {% elif i.Loginid.Type == "pending" %}Pending {% else %} Rejected {% endif %}</td>#}
+{#      <td> {% if i.Status == 'pending' %}<p><a href="/Admin_accept_retun_product/{{ i.id }}" class="btn btn-primary">Accept</a></p>#}
+{#      <p><a href="/Admin_reject_retun_product/{{ i.id }}"  class="btn btn-danger">Reject</a></p>{% else %} {{ i.Status }}{% endif %}</td>#}
+
+    </tr>
+            {% endfor %}
+         <tr>
+                <td colspan="9">
+                     <div class="pagination" style="{width:100%;}">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+                         <span class="step-links"></span>
+                         <span class="step-links"></span>
+    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock %}

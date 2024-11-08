@@ -1,0 +1,73 @@
+{% extends 'Retailer/base.html' %}
+{% load static %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Staff</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .table-wrapper {
+            margin-top: 20px;
+        }
+        .table-img {
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+        }
+        .btn-edit {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-edit:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+        .btn-add {
+            margin-bottom: 20px;
+        }
+        .content-wrapper {
+            margin-top: 100px; /* Adjust the margin-top for more gap */
+        }
+    </style>
+</head>
+
+<!-- Added a content-wrapper to add gap -->
+<div class="container content-wrapper">
+
+    <form action="/return_product_post" method="post">
+
+        <div class="table-wrapper">
+            <div class="row" id="page">
+                <div class="col-sm-4"></div>
+
+                <div class="col-sm-4">
+                    <div class="card">
+
+                        <div class="card-content">
+
+                            <p class="card-description">
+                                <input type="text" name="t" required placeholder="Reason" class="form-control" required />
+                            </p>
+                            <div align="center">
+                                <input type="submit" name="submit" value="Send" class="btn btn-primary" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+            </div>
+        </div>
+
+    </form>
+
+</div> <!-- End of container -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

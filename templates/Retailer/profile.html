@@ -1,0 +1,141 @@
+{% extends 'Retailer/base.html' %}
+{% block body %}
+{#<!DOCTYPE html>#}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #eef2f3;
+            color: #555;
+            margin: 0;
+            padding: 40px;
+        }
+
+        #profile {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #6ab0f3 0%, #4f8ef7 100%);
+            color: white;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            margin-bottom: 15px;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .profile-info {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+
+        .profile-info div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        p {
+            margin: 5px 0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .btn-custom {
+            display: inline-block;
+            padding: 12px 25px;
+            color: white;
+            background: #007bff;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .btn-custom:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            #profile {
+                padding: 20px;
+            }
+
+            .card-header {
+                padding: 20px;
+            }
+
+            .profile-image {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+<br/>
+<br/>
+<br/>
+<div id="profile">
+    <div class="card-header">
+        <img src="{{ val.Image.url }}" alt="Profile Image" class="profile-image">
+        <h1>{{ val.Name }}</h1>
+    </div>
+
+    <div class="card-body">
+        <div class="profile-info">
+            <div>
+                <label for="name"><i class="fas fa-user"></i> Name:</label>
+                <p id="name">{{ val.Name }}</p>
+            </div>
+
+            <div>
+                <label for="place"><i class="fas fa-map-marker-alt"></i> Place:</label>
+                <p id="place">{{ val.Place }}</p>
+            </div>
+
+            <div>
+                <label for="phone"><i class="fas fa-phone-alt"></i> Phone Number:</label>
+                <p id="phone">{{ val.PhoneNo }}</p>
+            </div>
+
+            <div>
+                <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+                <p id="email">{{ val.Email }}</p>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a href="/edit_profile#a" class="btn btn-custom">Edit Profile</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}

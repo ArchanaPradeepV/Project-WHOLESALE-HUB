@@ -55,27 +55,28 @@
         <div class="col-md-8 col-lg-6">
             <div class="form-container">
                 <h2 class="form-title">Add New Staff</h2>
-                <form id="form1" name="form1" method="post" action="add_staff_post" enctype="multipart/form-data">
+                <form id="form1" name="form1" method="post" action="/add_staff_post" enctype="multipart/form-data">
                     {% csrf_token %}
 
                     <div class="form-group">
                         <label for="name"> Name </label>
-                        <input type="text" id="name" name="name" title="Enter name only characters allowed" class="form-control" pattern="[a-z A-Z.]+" required>
+                        <input type="text" id="name" name="name" class="form-control _ge_de_ol" type="text" required aria-required="true" pattern="[a-zA-Z .]+" title="Characters only in name ">
                     </div>
 
                     <div class="form-group">
                         <label for="place">Place</label>
-                        <input type="text" id="place" name="place"title="Enter place only characters allowed" class="form-control" pattern="[a-z A-Z.]+" required>
+                        <input type="text" id="place" name="place" class="form-control _ge_de_ol" type="text" required aria-required="true"  pattern="[a-zA-Z .]+"  title="Characters only in place ">
                     </div>
 
                     <div class="form-group">
                         <label for="phone">Phone</label>
-                        <input type="text" id="phone" name="phone" class="form-control" required pattern="[6789][0-9]{9}">
+                        <input type="text" id="phone" name="phone" class="form-control _ge_de_ol" type="text"  required  pattern="[6789][0-9]{9}" aria-required="true"  title="Phone no starts with 9876 and followed by 9 letters ">
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
+                        <input type="email" id="email" name="email" type="email" class="form-control" required="" aria-required="true" pattern="[a-z0-9.]+[@][a-z]+[.][a-z]+" value="{{ val.Email }}" title="example@host.com">
+                  <p id="message"></p>
                     </div>
 
                     <div class="form-group">
@@ -85,16 +86,20 @@
 
                     <div class="form-group">
                         <label for="username">User Name</label>
-                        <input type="text" id="username" name="username" class="form-control" required>
+                        <input type="text" id="un" name="username" class="form-control _ge_de_ol" type="text" required=""  aria-required="true" pattern="[A-Za-z0-9]{3,15}" title="Username must be 3 to 15 alphanumeric characters."
+                   required >
+                        <p id="unmsg"></p>
                     </div>
 
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" id="password" name="password" class="form-control" required>
+                        <input type="password" id="password" name="password" class="form-control _ge_de_ol" type="text"  required="" aria-required="true"  pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}"
+                   title="Password must be 8 to 20 characters long, include at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&)."
+                   required >
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary btn-custom">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-custom" id="targetButton">Submit</button>
                         <a href="admin_manage_staff" class="btn btn-secondary btn-secondary-custom ms-2">Cancel</a>
                     </div>
                 </form>
@@ -103,9 +108,53 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{#<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>#}
+{#<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>#}
+{#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>#}
+
+   <script type="text/javascript" src="{% static 'login/assets/js/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'login/assets/js/jquery.vide.min.js' %}"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        $("#email").keyup(function(){
+            var email = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "/checkemail",
+                data: { email: email },
+                success: function(data) {
+                    if (data.is_taken) {
+                        $('#message').text(data.error_message);
+                        $('#targetButton').prop('disabled', true);
+                    } else {
+                        $('#message').text("");
+                        $('#targetButton').prop('disabled', false);
+                    }
+                }
+            });
+        });
+
+        $("#un").keyup(function(){
+            var username = $(this).val();
+
+            $.ajax({
+                type: "GET",
+                url: "/checkusername",
+                data: { email: username },
+                success: function(data) {
+                    if (data.is_taken) {
+                        $('#unmsg').text(data.error_message);
+                        $('#targetButton').prop('disabled', true);
+                    } else {
+                        $('#unmsg').text("");
+                        $('#targetButton').prop('disabled', false);
+                    }
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
 {% endblock %}

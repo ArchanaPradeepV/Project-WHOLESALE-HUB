@@ -1,0 +1,100 @@
+{% extends 'Retailer/base.html' %}
+{% load static %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Staff</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .table-wrapper {
+            margin-top: 20px;
+        }
+        .table-img {
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+        }
+        .btn-edit {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-edit:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+        .btn-add {
+            margin-bottom: 20px;
+
+        }
+    </style>
+</head>
+<div class="container">
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<form action="staff_view_product_search" method="post">
+
+
+    <div class="table-wrapper">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Si. No</th>
+{#                    <th scope="col">Name</th>#}
+                    <th scope="col">Amount</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+             <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for i in page_obj %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+{#                    <td>{{ i.Retailerid.Name|capfirst }}</td>#}
+                    <td>{{ i.Amount|floatformat:2  }}</td>
+                    <td>{{ i.Date }}</td>
+                    <td>{{ i.Status }}</td>
+
+                    <td><a href="/view_myorder_more/{{ i.id }}" class="btn btn-warning btn-edit">View</a></td>
+                </tr>
+                {% endfor %}
+            <tr>
+                <td colspan="9">
+                     <div class="pagination" style="{width:100%;}">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+                         <span class="step-links"></span>
+                         <span class="step-links"></span>
+    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'Staff/index.html' %}
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Staff</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background color */
+            color: #343a40; /* Dark text color */
+        }
+        .container {
+            margin-top: 30px;
+            background-color: #ffffff; /* White container background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000000; /* Primary color for headings */
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-submit {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-submit:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+        .btn-back {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="/staff_view_product" class="btn btn-secondary btn-back">Back to Product List</a>
+        <h2>EDIT PRODUCT</h2>
+        <form id="form1" name="form1" method="post" action="/edit_product_post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ staff.id }}">
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" value="{{ val.Name }}" class="form-control"  required title="Enter name (only letters allowed)">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" value="{{ val.Description }}" class="form-control" pattern="[a-zA-Z\s]+" required title="Enter description (only letters allowed)">
+            </div>
+
+{#            <div class="form-group">#}
+{#                <label for="price">Price</label>#}
+{#                <input type="number" id="price" name="price" value="{{ val.Price }}" class="form-control" step="0.01" required>#}
+{#            </div>#}
+
+
+        <div class="form-group">
+    <label for="price">Price</label>
+    <input type="number" id="price" name="price" value="{{ val.Price }}" class="form-control" min="0.01" step="0.01"  required>
+</div>
+{#            <div class="form-group">#}
+{#                <label for="stock">Stock(in meters)</label>#}
+{#                <input type="number" id="stock" name="stock" value="{{ val.Stock }}" class="form-control" required>#}
+{#            </div>#}
+        <div class="form-group">
+    <label for="stock">Stock (in meters)</label>
+    <input type="number" id="stock" name="stock" value="{{ val.Stock }}"  class="form-control" min="1" step="1" title="Please enter a valid stock greater than zero." required>
+</div>
+
+         <div class="form-group">
+                <label for="colour">Colour</label>
+                <input type="text" id="colour" name="colour" value="{{ val.Colour }}" class="form-control" pattern="[a-zA-Z\s]+" required title="Enter description (only letters allowed)">
+            </div>
+
+ <div class="form-group">
+                        <label for="username">Category id</label>
+                        <select name="cat">
+                            {% for i in c %}
+                                <option value="{{ i.id }}" {% if i.id == val.Categoryid.id %} selected{% endif %}>{{ i.Category }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" id="image" name="image" class="form-control-file" accept="image/png,image/jpeg">
+            </div>
+
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary btn-submit">Update</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+{% endblock %}

@@ -1,69 +1,132 @@
 {% load static %}
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link href="../static/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../static/assets/css/style.css" rel="stylesheet">
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 
     <title>Login</title>
-  </head>
-  <body>
+</head>
+<body>
     <section class="form-02-main">
-      <div class="container">
-        <div class="row">
-          <form class="col-md-12" method="post" action="user_reg" enctype="multipart/form-data" name="form1" >
-            <div class="_lk_de">
-              <div class="form-03-main">
-                <div class="logo">
-                  <img src="../static/assets/images/pic.jpg" class="rounded-circle">
-                </div>
-                  <div align="center">
-                  <h1>WholesaleHub</h1>
-                </div>
-                <div class="form-group">
-                  <input type="text" name="name" class="form-control _ge_de_ol" type="text" placeholder="Enter Name" required aria-required="true" pattern="[a-zA-Z .]+" title="Characters only in name ">
-                </div> <div class="form-group">
-                  <input type="text" name="place" class="form-control _ge_de_ol" type="text" placeholder="Enter Place" required aria-required="true"  pattern="[a-zA-Z .]+"  title="Characters only in place ">
-                </div>
- <div class="form-group">
-                  <input type="tel" name="phone" class="form-control _ge_de_ol" type="text" placeholder="Enter Phoneno" required  pattern="[6789][0-9]{9}" aria-required="true"  title="Phone no starts with 9876 and followed by 9 letters ">
-                </div>
+        <div class="container">
+            <div class="row">
+                <form class="col-md-12" method="post" action="user_reg" enctype="multipart/form-data" name="form1">
+                    <div class="_lk_de">
+                        <div class="form-03-main">
+                            <div class="logo">
+                                <img src="{% static 'assets/images/pic.jpg' %}" class="rounded-circle">
+                            </div>
+                            <div align="center">
+                                <h1>WholesaleHub</h1>
+                            </div>
 
-                   <div class="form-group">
-                  <input type="file" name="image" class="form-control _ge_de_ol"  placeholder="Select Image" required aria-required="true" accept="image/*">
-                </div>
-                   <div class="form-group">
-                  <input  class="form-control _ge_de_ol" name="email" type="email" placeholder="Enter Email" required="" aria-required="true" pattern="[a-z0-9.]+[@][a-z]+[.][a-z]+" title="example@host.com">
-                </div> <div class="form-group">
-                  <input type="text" name="username" class="form-control _ge_de_ol" type="text" placeholder="Enter User Name" required=""  aria-required="true" pattern="[A-Za-z0-9]{3,15}"
-                   title="Username must be 3 to 15 alphanumeric characters."
-                   required >
-                </div>
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" name="name" class="form-control _ge_de_ol" placeholder="Enter Name" required aria-required="true" pattern="[a-zA-Z .]+" title="Characters only in name">
+                            </div>
 
-                <div class="form-group">
-                  <input type="password" name="password" class="form-control _ge_de_ol" type="text" placeholder="Enter Password" required="" aria-required="true"  pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}"
-                   title="Password must be 8 to 20 characters long, include at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&)."
-                   required >
-                </div>
-                <div class="form-group">
-                  <div class="_btn_04">
-                    <input type="submit" value="Submit" style="background-color:#2b3990;color:white;">
-                  </div>
-                </div>
-              </div>
+                            <div class="form-group">
+                                <label for="place">Place</label>
+                                <input type="text" name="place" class="form-control _ge_de_ol" placeholder="Enter Place" required aria-required="true" pattern="[a-zA-Z .]+" title="Characters only in place">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" name="phone" class="form-control _ge_de_ol" placeholder="Enter Phone No" required pattern="[6789][0-9]{9}" aria-required="true" title="Phone no starts with 6789 and followed by 9 digits">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image">Select Image</label>
+                                <input type="file" name="image" class="form-control _ge_de_ol" required aria-required="true" accept="image/*">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input class="form-control _ge_de_ol" name="email" id="email" type="email" placeholder="Enter Email" required aria-required="true" pattern="[a-z0-9.]+[@][a-z]+[.][a-z]+" title="example@host.com">
+                                <p id="message"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="un">Username</label>
+                                <input type="text" name="username" id="un" class="form-control _ge_de_ol" placeholder="Enter User Name" required aria-required="true" pattern="[A-Za-z0-9]{3,15}" title="Username must be 3 to 15 alphanumeric characters.">
+                                <p id="unmsg"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" class="form-control _ge_de_ol" placeholder="Enter Password" required aria-required="true" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}" title="Password must be 8 to 20 characters long, include at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&).">
+                            </div>
+
+                            <div class="form-group">
+                                <div class="_btn_04">
+                                    <input type="submit" value="Register" style="background-color:#2b3990;color:white;border: none" id="targetButton">
+                                    <br>
+                                    <div id="error-message" style="color: green; display: none; align-items: center;" align="center"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {% if redirect_to_login %}
+    <div class="alert alert-success mt-4">
+        Registration completed successfully! Redirecting to home page...
+    </div>
+    <script>
+        setTimeout(function(){
+            window.location.href = '/';
+        }, 3000);
+    </script>
+    {% endif %}
+
             </div>
-          </form>
-          </div>
         </div>
-      </div>
     </section>
-  </body>
+    <script type="text/javascript" src="{% static 'login/assets/js/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'login/assets/js/jquery.vide.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        $("#email").keyup(function(){
+            var email = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "/checkemail",
+                data: { email: email },
+                success: function(data) {
+                    if (data.is_taken) {
+                        $('#message').text(data.error_message);
+                        $('#targetButton').prop('disabled', true);
+                    } else {
+                        $('#message').text("");
+                        $('#targetButton').prop('disabled', false);
+                    }
+                }
+            });
+        });
+
+        $("#un").keyup(function(){
+            var username = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "/checkusername",
+                data: { username: username },
+                success: function(data) {
+                    if (data.is_taken) {
+                        $('#unmsg').text(data.error_message);
+                        $('#targetButton').prop('disabled', true);
+                    } else {
+                        $('#unmsg').text("");
+                        $('#targetButton').prop('disabled', false);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
 </html>
-
-
-

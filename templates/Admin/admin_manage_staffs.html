@@ -27,19 +27,21 @@
         }
         .btn-add {
             margin-bottom: 20px;
+{#            background-color: #218838; /* Darker green on hover */#}
+{#            color: white;#}
         }
     </style>
 </head>
 <body>
 <div class="container">
     <a href="add_staff" class="btn btn-primary btn-add">Add New Staff</a>
-<form name="" action="popup" method="post">
+<form name="" action="/popup" method="post">
     <label for="name-search"><font color="white">Name:</font>
     <input type="text" id="name-search" name="textfield" placeholder="Enter name to search"/>
         <input type="submit" name="Submit" value="Search"/>
     </label>
 
-</form>
+
     <div class="table-wrapper">
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
@@ -51,10 +53,12 @@
                     <th scope="col">Email</th>
                     <th scope="col">Image</th>
                     <th scope="col">Edit</th>
+                    <th scope="col">Status</th>
+
                 </tr>
             </thead>
             <tbody>
-                {% for i in staff %}
+                {% for i in page_obj %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ i.Name|capfirst }}</td>
@@ -62,12 +66,43 @@
                     <td>{{ i.PhoneNo }}</td>
                     <td>{{ i.Email }}</td>
                     <td><img src="{{ i.Image.url }}" class="table-img" alt="{{ i.Name }}"></td>
-                    <td><a href="edit_staff/{{ i.id }}" class="btn btn-warning btn-edit">EDIT</a></td>
+                    <td><a href="edit_staff/{{ i.id }}" class="btn btn-warning btn-edit">EDIT</a>
+                    <a href="block/{{ i.Loginid.id }}" class="btn btn-warning btn-edit">BLOCK</a>
+                    <a href="unblock/{{ i.Loginid.id }}" class="btn btn-warning btn-edit">UNBLOCK</a>
+
+                    </td>
+                <td>
+                <span class="badge badge-secondary">{{ i.Status }}</span>
+                </td>
                 </tr>
                 {% endfor %}
+               <tr>
+                <td colspan="9">
+                     <div class="pagination" style="{width:100%;}">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+                         <span class="step-links"></span>
+                         <span class="step-links"></span>
+    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
+</form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

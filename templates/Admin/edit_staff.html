@@ -1,4 +1,5 @@
 {% extends 'Admin/index.html' %}
+{% load static %}
 {% block body %}
 
 <!DOCTYPE html>
@@ -7,14 +8,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Staff</title>
-    <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .container {
-            margin-top: 20px;
+        body {
+            background-color: #f8f9fa;
         }
-        .form-group {
-            margin-bottom: 1rem;
+        .container {
+            margin-top: 30px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000000;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #343a40;
         }
         .btn-submit {
             transition: background-color 0.3s, color 0.3s;
@@ -24,11 +37,12 @@
             color: #fff;
         }
         .btn-back {
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
         .img-preview {
             max-height: 150px;
             object-fit: cover;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -36,55 +50,73 @@
 <body>
     <div class="container">
         <a href="/admin_manage_staff" class="btn btn-secondary btn-back">Back to Staff List</a>
-        <h2><font color="white">EDIT STAFF</font></h2>
+        <h2>EDIT STAFF</h2>
         <form id="form1" name="form1" method="post" action="/edit_staff_post" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="hidden" name="id" value="{{ staff.id }}">
 
             <div class="form-group">
-                <label for="name"><font color="white">Name</font> </label>
-                <input type="text" id="name" name="name"class="form-control" value="{{ staff.Name }}" />
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" class="form-control" value="{{ staff.Name }}" required />
             </div>
 
             <div class="form-group">
-                <label for="place"><font color="white">Place</font></label>
-                <input type="text" id="place" name="place" class="form-control" value="{{ staff.Place }}" />
+                <label for="place">Place</label>
+                <input type="text" id="place" name="place" class="form-control" value="{{ staff.Place }}" required />
             </div>
 
             <div class="form-group">
-                <label for="phone"><font color="white">Phone</font></label>
+                <label for="phone">Phone</label>
                 <input type="text" id="phone" name="phone" class="form-control" value="{{ staff.PhoneNo }}" required pattern="[6789][0-9]{9}" />
             </div>
 
             <div class="form-group">
-                <label for="email"><font color="white">Email</font></label>
-                <input type="email" id="email" name="email" class="form-control" value="{{ staff.Email }}" />
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="{{ staff.Email }}" title="example@host.com" />
+                <p id="message"></p>
             </div>
 
             <div class="form-group">
-                <label for="image"><font color="white">Image</font></label>
+                <label for="image">Image</label>
                 <input type="file" id="image" name="image" class="form-control-file" accept="image/png,image/jpeg" />
             </div>
 
             <div class="form-group">
-                <label for="username"><font color="white">UserName</font></label>
-                <input type="text" id="username" name="username" class="form-control" value="{{ login.Username }}" />
-            </div>
-
-            <div class="form-group">
-                <label for="password"><font color="white">Password</font></label>
-                <input type="password" id="password" name="password" class="form-control" value="{{ login.Password }}" />
+                <label for="place">Status</label>
+                <input type="text" id="status" name="status" readonly class="form-control" value="{{ staff.Status }}" required />
             </div>
 
             <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+                <button type="submit" class="btn btn-primary btn-submit">Update</button>
             </div>
         </form>
     </div>
+
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        $("#email").keyup(function(){
+            var email = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "/checkemail",
+                data: { email: email },
+                success: function(data) {
+                    if (data.is_taken) {
+                        $('#message').text(data.error_message);
+                        $('#targetButton').prop('disabled', true);
+                    } else {
+                        $('#message').text("");
+                        $('#targetButton').prop('disabled', false);
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
 
